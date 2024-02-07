@@ -1,14 +1,14 @@
 import 'package:driver_earnings_module/components/earnings_card.dart';
 import 'package:flutter/material.dart';
 
-class WeeklyEarningsTab extends StatefulWidget {
-  const WeeklyEarningsTab({super.key});
+class WeeklyMainTab extends StatefulWidget {
+  const WeeklyMainTab({super.key});
 
   @override
-  State<WeeklyEarningsTab> createState() => _WeeklyEarningsTabState();
+  State<WeeklyMainTab> createState() => _WeeklyMainTabState();
 }
 
-class _WeeklyEarningsTabState extends State<WeeklyEarningsTab> {
+class _WeeklyMainTabState extends State<WeeklyMainTab> {
   Map<String, double> todayEarningsData = {
     'uniqueRiders': 0.00,
     'pickups': 0.00,
