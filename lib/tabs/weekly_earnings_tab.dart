@@ -42,9 +42,11 @@ class _WeeklyEarningsTabState extends State<WeeklyEarningsTab> {
                 ),
               ),
             ),
-            EarningsCard(
-              todayEarningsData: todayEarningsData,
-              showDate: true,
+            Expanded(
+              child: EarningsCard(
+                todayEarningsData: todayEarningsData,
+                showDate: true,
+              ),
             ),
           ],
         ),
