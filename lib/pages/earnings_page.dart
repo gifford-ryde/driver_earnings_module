@@ -1,5 +1,5 @@
-import 'package:driver_earnings_module/tabs/today_earnings_tab.dart';
-import 'package:driver_earnings_module/tabs/weekly_earnings_tab.dart';
+import 'package:driver_earnings_module/tabs/today/today_main_tab.dart';
+import 'package:driver_earnings_module/tabs/weekly/weekly_main_tab.dart';
 import 'package:flutter/material.dart';
 
 class EarningsPage extends StatefulWidget {
@@ -56,7 +56,7 @@ class _EarningsPageState extends State<EarningsPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                width: 300,
+                width: 350,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   border: Border.all(
@@ -89,8 +89,8 @@ class _EarningsPageState extends State<EarningsPage> {
             const Expanded(
               child: TabBarView(
                 children: [
-                  TodayEarningsTab(),
-                  WeeklyEarningsTab(),
+                  TodayMainTab(),
+                  WeeklyMainTab(),
                   Icon(Icons.directions_bike),
                 ],
               ),

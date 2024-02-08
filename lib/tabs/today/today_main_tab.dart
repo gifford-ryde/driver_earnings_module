@@ -1,14 +1,14 @@
 import 'package:driver_earnings_module/components/earnings_card.dart';
 import 'package:flutter/material.dart';
 
-class WeeklyEarningsTab extends StatefulWidget {
-  const WeeklyEarningsTab({super.key});
+class TodayMainTab extends StatefulWidget {
+  const TodayMainTab({super.key});
 
   @override
-  State<WeeklyEarningsTab> createState() => _WeeklyEarningsTabState();
+  State<TodayMainTab> createState() => _TodayMainTabState();
 }
 
-class _WeeklyEarningsTabState extends State<WeeklyEarningsTab> {
+class _TodayMainTabState extends State<TodayMainTab> {
   Map<String, double> todayEarningsData = {
     'uniqueRiders': 0.00,
     'pickups': 0.00,
@@ -35,7 +35,7 @@ class _WeeklyEarningsTabState extends State<WeeklyEarningsTab> {
                 color: Colors.pink[50],
               ),
               child: Text(
-                'Earnings today will be updated after 5:00am tomorrow.',
+                'Earnings today may take up to 60 mins to refresh.',
                 style: TextStyle(
                   color: Colors.pink[400],
                   fontSize: 13,
@@ -52,6 +52,5 @@ class _WeeklyEarningsTabState extends State<WeeklyEarningsTab> {
         ),
       ),
     );
-    ;
   }
 }
