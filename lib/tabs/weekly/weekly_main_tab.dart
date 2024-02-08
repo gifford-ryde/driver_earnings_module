@@ -1,4 +1,5 @@
 import 'package:driver_earnings_module/components/earnings_card.dart';
+import 'package:driver_earnings_module/tabs/weekly/weekly_earning_tabs.dart';
 import 'package:flutter/material.dart';
 
 class WeeklyMainTab extends StatefulWidget {
@@ -42,12 +43,7 @@ class _WeeklyMainTabState extends State<WeeklyMainTab> {
                 ),
               ),
             ),
-            Expanded(
-              child: EarningsCard(
-                todayEarningsData: todayEarningsData,
-                showDate: true,
-              ),
-            ),
+            Expanded(child: WeeklyEarningTabs()),
           ],
         ),
       ),
