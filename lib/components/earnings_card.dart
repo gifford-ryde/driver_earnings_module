@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:driver_earnings_module/models/daily_earning_response.dart';
 
 class EarningsCard extends StatefulWidget {
-  const EarningsCard({super.key, required this.todayEarningsData, required this.showDate});
-  final Map<String, double> todayEarningsData;
+  const EarningsCard(
+      {super.key, required this.earnings, required this.showDate});
+  final Earnings? earnings;
   final bool showDate;
-  
+
   @override
   State<EarningsCard> createState() => _EarningsCardState();
 }
 
 class _EarningsCardState extends State<EarningsCard> {
-  String date = '06 Feb 2024';
+  String date = DateFormat('dd MMM yyyy').format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class _EarningsCardState extends State<EarningsCard> {
                   style: TextStyle(fontSize: 12),
                 ),
                 Text(
-                  widget.todayEarningsData["Today's Earnings (SGD)"]!.toStringAsFixed(2),
+                  widget.earnings!.result.net.toStringAsFixed(2),
                   style: const TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.w500,
@@ -37,10 +40,12 @@ class _EarningsCardState extends State<EarningsCard> {
                 ),
               ],
             ),
-            widget.showDate ? Text(
-              date,
-              style: TextStyle(fontSize: 12),
-            ) : Container(),
+            widget.showDate
+                ? Text(
+                    date,
+                    style: TextStyle(fontSize: 12),
+                  )
+                : Container(),
             Container(
               padding: const EdgeInsets.all(10),
               height: 80,
@@ -52,7 +57,8 @@ class _EarningsCardState extends State<EarningsCard> {
                     child: Column(
                       children: [
                         Text(
-                          widget.todayEarningsData['uniqueRiders']!.toStringAsFixed(0),
+                          widget.earnings!.result.trip.unique
+                              .toStringAsFixed(0),
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.w400,
@@ -78,7 +84,7 @@ class _EarningsCardState extends State<EarningsCard> {
                     child: Column(
                       children: [
                         Text(
-                          widget.todayEarningsData['pickups']!.toStringAsFixed(0),
+                          widget.earnings!.result.trip.count.toStringAsFixed(0),
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.w400,
@@ -108,7 +114,9 @@ class _EarningsCardState extends State<EarningsCard> {
                       ),
                       color: Colors.white,
                       child: Column(
-                        children: widget.todayEarningsData.entries.skip(2).map((entry) {
+                        children: (widget.earnings!.result.subcategories)
+                            .entries
+                            .map((MapEntry<String, dynamic> entry) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             child: Row(
@@ -119,7 +127,7 @@ class _EarningsCardState extends State<EarningsCard> {
                                   style: TextStyle(color: Colors.grey[700]),
                                 ),
                                 Text(
-                                  entry.value.toStringAsFixed(2),
+                                  entry.value.toString(),
                                   style: TextStyle(color: Colors.grey[700]),
                                 ),
                               ],

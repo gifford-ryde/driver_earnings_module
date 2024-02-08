@@ -1,5 +1,7 @@
 import 'package:driver_earnings_module/components/earnings_card.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:driver_earnings_module/models/daily_earning_response.dart';
 
 class TodayMainTab extends StatefulWidget {
   const TodayMainTab({super.key});
@@ -9,47 +11,60 @@ class TodayMainTab extends StatefulWidget {
 }
 
 class _TodayMainTabState extends State<TodayMainTab> {
-  Map<String, double> todayEarningsData = {
-    'uniqueRiders': 0.00,
-    'pickups': 0.00,
-    "Today's Earnings (SGD)": 0.00,
-    'RydePay': 0.00,
-    'Cash Collected': 0.00,
-    'Bonus': 0.00,
-    'Tips': 0.00,
-    'Service Fee': 0.00,
-    'Platform Fee': 0.00,
-    'Toll (ERP)': 0.00,
-  };
+  Earnings? earnings;
+
+  @override
+  void initState() {
+    super.initState();
+    getEarningsData();
+  }
+
+  void getEarningsData() async {
+    var dio = Dio();
+
+    try {
+      Response response = await dio.get(
+          'https://ecc0b02f-46d5-4787-8d34-f6d36ff7e3be.mock.pstmn.io/api/driverActivity/summary/daily');
+      Earnings data = Earnings.fromJson(response.data);
+      setState(() {
+        earnings = data;
+      });
+      print(earnings?.result.net); // Prints the net earnings
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(13),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.pink[50],
+        child: earnings == null
+            ? CircularProgressIndicator()
+            : Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(13),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.pink[50],
+                    ),
+                    child: Text(
+                      'Earnings today may take up to 60 mins to refresh.',
+                      style: TextStyle(
+                        color: Colors.pink[400],
+                        fontSize: 13,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: EarningsCard(
+                      earnings: earnings,
+                      showDate: true,
+                    ),
+                  )
+                ],
               ),
-              child: Text(
-                'Earnings today may take up to 60 mins to refresh.',
-                style: TextStyle(
-                  color: Colors.pink[400],
-                  fontSize: 13,
-                ),
-              ),
-            ),
-            Expanded(
-              child: EarningsCard(
-                todayEarningsData: todayEarningsData,
-                showDate: true,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
