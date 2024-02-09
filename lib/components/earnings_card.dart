@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:driver_earnings_module/models/daily_earning_response.dart';
+import 'package:driver_earnings_module/models/earning_response.dart';
 
 class EarningsCard extends StatefulWidget {
   const EarningsCard(
@@ -32,7 +32,7 @@ class _EarningsCardState extends State<EarningsCard> {
                   style: TextStyle(fontSize: 12),
                 ),
                 Text(
-                  widget.earnings!.result.net.toStringAsFixed(2),
+                  widget.earnings!.net.toStringAsFixed(2),
                   style: const TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.w500,
@@ -48,16 +48,16 @@ class _EarningsCardState extends State<EarningsCard> {
                 : Container(),
             Container(
               padding: const EdgeInsets.all(10),
-              height: 80,
+              height: 90,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   SizedBox(
-                    width: 80,
+                    width: 100,
                     child: Column(
                       children: [
                         Text(
-                          widget.earnings!.result.trip.unique
+                          widget.earnings!.trip['unique']!
                               .toStringAsFixed(0),
                           style: TextStyle(
                             fontSize: 28,
@@ -80,11 +80,11 @@ class _EarningsCardState extends State<EarningsCard> {
                     color: Colors.grey[300],
                   ),
                   SizedBox(
-                    width: 80,
+                    width: 100,
                     child: Column(
                       children: [
                         Text(
-                          widget.earnings!.result.trip.count.toStringAsFixed(0),
+                          widget.earnings!.trip['count']!.toStringAsFixed(0),
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.w400,
@@ -114,7 +114,7 @@ class _EarningsCardState extends State<EarningsCard> {
                       ),
                       color: Colors.white,
                       child: Column(
-                        children: (widget.earnings!.result.subcategories)
+                        children: (widget.earnings!.subcategories)
                             .entries
                             .map((MapEntry<String, dynamic> entry) {
                           return Padding(

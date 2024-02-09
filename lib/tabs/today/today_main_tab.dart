@@ -1,7 +1,7 @@
 import 'package:driver_earnings_module/components/earnings_card.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:driver_earnings_module/models/daily_earning_response.dart';
+import 'package:driver_earnings_module/models/earning_response.dart';
 
 class TodayMainTab extends StatefulWidget {
   const TodayMainTab({super.key});
@@ -10,8 +10,11 @@ class TodayMainTab extends StatefulWidget {
   State<TodayMainTab> createState() => _TodayMainTabState();
 }
 
-class _TodayMainTabState extends State<TodayMainTab> {
+class _TodayMainTabState extends State<TodayMainTab> with AutomaticKeepAliveClientMixin<TodayMainTab>{
   Earnings? earnings;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -25,11 +28,11 @@ class _TodayMainTabState extends State<TodayMainTab> {
     try {
       Response response = await dio.get(
           'https://ecc0b02f-46d5-4787-8d34-f6d36ff7e3be.mock.pstmn.io/api/driverActivity/summary/daily');
-      Earnings data = Earnings.fromJson(response.data);
+      Earnings data = Earnings.fromJson(response.data['result']);
       setState(() {
         earnings = data;
       });
-      print(earnings?.result.net); // Prints the net earnings
+      print(earnings?.net); // Prints the net earnings
     } catch (e) {
       print('Error: $e');
     }
